@@ -27,25 +27,27 @@
         display: none;
         transition: opacity 0.5s;
     }
-    .confetti {
-            width: 10px;
-            height: 10px;
-            position: absolute;
-            background-color: #f00; /* Red confetti */
-            border-radius: 50%;
-            animation: confetti-fall 2s linear infinite;
-        }
-
-        @keyframes confetti-fall {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(400px);
-                opacity: 0;
-            }
-        }
+    @keyframes wobble {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+            100% { transform: rotate(0deg); }
+    }
+    @keyframes sparkle {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1) rotate(180deg);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+        opacity: 1;
+    }
+}
 
 
 
@@ -94,33 +96,29 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $(".gifts").click(function() {
+    $(document).ready(function() 
+    {
+        $(".gifts").click(function() 
+        {
             var $image = $(this).find("img");
-            if ($image.hasClass("normalprize")) {
-                $image.fadeToggle(500, function() {                 
-                    alert("Congratulations! You won a normal prize!");
+                if ($image.hasClass("normalprize")) {
+                    $image.fadeToggle(500, function() {
+                        $image.css("animation", "wobble 0.5s");                 
+                            alert("Congratulations! You won a normal prize!");
                 });
-            } else if ($image.hasClass("grandprize")) {               
-                $image.fadeToggle(500, function() {
-                    alert("Congratulations! You won the grand prize!");
-                    createConfetti(); 
+            } else if ($image.hasClass("grandprize")) 
+            {               
+                $image.fadeToggle(500, function() 
+                {
+                    $image.css("animation-name", "sparkle");
+                        $image.css("animation-duration", "1s");
+                            $image.css("animation-timing-function", "linear");
+                                $image.css("animation-iteration-count", "infinite");
+                                    alert("Congratulations! You won the grand prize!");
                 });
             }
         });
-        function createConfetti() {
-            // Create confetti by appending div elements with the "confetti" class
-            for (var i = 0; i < 100; i++) {
-                var confetti = document.createElement("div");
-                confetti.className = "confetti";
-                confetti.style.left = Math.random() * window.innerWidth + "px";
-                document.body.appendChild(confetti);
-            }
-        }
-
-
     });
-
 
 
 
